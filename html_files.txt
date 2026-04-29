@@ -1,0 +1,57 @@
+./app/layout.tsx:11:    <html lang="en">
+./app/layout.tsx:13:    </html>
+./app/page.tsx:4:  redirect('/index.html');
+./public/index.html:1:<!DOCTYPE html>
+./public/index.html:2:<html lang="pt-BR">
+./public/index.html:25:    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+./public/index.html:69:            html, body { height: auto !important; min-height: 100% !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; background-color: #fff !important; color: #000 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+./public/index.html:1482:        window.printHtmlContent = function(htmlContent, titleStr) {
+./public/index.html:1493:                <!DOCTYPE html>
+./public/index.html:1494:                <html>
+./public/index.html:1506:                    ${htmlContent}
+./public/index.html:1508:                </html>
+./public/index.html:1536:            const htmlContent = `
+./public/index.html:1563:            window.printHtmlContent(htmlContent, "Carteirinha_TanqueTeam");
+./public/index.html:1666:        if (!session) window.location.href = "https://www.tanqueteambjj.com.br/login.html";
+./public/index.html:1669:            if(user.role !== 'admin' && !isCanvasPreview) window.location.href = "https://www.tanqueteambjj.com.br/login.html";
+./public/index.html:1687:        window.handleLogout = () => { localStorage.removeItem('tanque_user_session'); window.location.href = "https://www.tanqueteambjj.com.br/login.html"; }
+./public/index.html:1930:                        let html = `<h4 class="text-xs font-bold text-purple-700 dark:text-purple-400 uppercase mb-2"><i class="fa-solid fa-users"></i> Dependentes Vinculados (${deps.length})</h4><ul class="space-y-2">`;
+./public/index.html:1931:                        deps.forEach(d => { html += `<li class="flex justify-between items-center bg-white dark:bg-gray-700 p-2 rounded shadow-sm border border-purple-100 dark:border-purple-800"><div><p class="font-bold text-xs text-purple-900 dark:text-purple-200">${d.name}</p><p class="text-[10px] text-purple-600 dark:text-purple-400">${d.belt || 'Branca'} • Freq: ${d.attendance ? d.attendance.length : 0}</p></div></li>`; });
+./public/index.html:1932:                        html += `</ul>`; familyBox.innerHTML = html; familyBox.classList.remove('hidden');
+./public/index.html:2416:                    if (!window.html5QrCode) { window.html5QrCode = new Html5Qrcode("reader"); }
+./public/index.html:2417:                    if (!window.html5QrCode.isScanning) {
+./public/index.html:2419:                        window.html5QrCode.start({ facingMode: "environment" }, config, window.onScanSuccess, window.onScanFailure).then(() => { window.isScanningPaused = false; }).catch(err => {
+./public/index.html:2420:                            window.html5QrCode.start({ facingMode: "user" }, config, window.onScanSuccess, window.onScanFailure).then(() => { window.isScanningPaused = false; }).catch(err2 => {
+./public/index.html:2431:            if (window.html5QrCode && window.html5QrCode.isScanning) { try { window.html5QrCode.stop().then(() => { window.html5QrCode.clear(); window.html5QrCode = null; document.getElementById('reader').innerHTML = '<i class="fa-solid fa-camera text-4xl text-gray-700"></i>'; }).catch(e => { }); } catch(e) {} }
+./public/index.html:2904:            let html = '';
+./public/index.html:3045:                        html += `<tr><td colspan="10" class="px-6 py-2 bg-gray-100 dark:bg-gray-700 text-xs font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider">${group}</td></tr>`;
+./public/index.html:3052:                    html += renderStudentRow(s, false, null, myDependents.length > 0);
+./public/index.html:3056:                        html += renderStudentRow(dep, true, s.id, false);
+./public/index.html:3063:                        html += renderStudentRow(titular, false, null, myDependents.length > 0);
+./public/index.html:3066:                            html += renderStudentRow(dep, true, titular.id, false);
+./public/index.html:3070:                        html += renderStudentRow(s, false, null, false);
+./public/index.html:3074:                    html += renderStudentRow(s, false, null, false);
+./public/index.html:3079:            tbody.innerHTML = html;
+./public/index.html:3553:            <a href="https://www.tanqueteambjj.com.br/login.html" style="background-color: #D90429; color: #ffffff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 4px; display: inline-block;">Acessar Portal do Aluno</a>
+./public/index.html:3760:</html>
+./package-lock.json:1989:        "escape-html": "^1.0.3",
+./package-lock.json:2026:        "escape-html": "^1.0.3",
+./package-lock.json:2125:        "escape-html": "^1.0.3",
+./package-lock.json:2151:        "escape-html": "^1.0.3",
+./package-lock.json:5072:        "parse5-htmlparser2-tree-adapter": "^6.0.0",
+./package-lock.json:5559:        "escape-html": "~1.0.3",
+./package-lock.json:6394:    "node_modules/escape-html": {
+./package-lock.json:6396:      "resolved": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
+./package-lock.json:7102:        "escape-html": "~1.0.3",
+./package-lock.json:7334:        "escape-html": "~1.0.3",
+./package-lock.json:11700:    "node_modules/parse5-htmlparser2-tree-adapter": {
+./package-lock.json:11702:      "resolved": "https://registry.npmjs.org/parse5-htmlparser2-tree-adapter/-/parse5-htmlparser2-tree-adapter-6.0.1.tgz",
+./package-lock.json:11710:    "node_modules/parse5-htmlparser2-tree-adapter/node_modules/parse5": {
+./package-lock.json:12885:        "escape-html": "~1.0.3",
+./package-lock.json:12937:        "escape-html": "~1.0.3",
+./student_grep.txt:105:3052:                    html += renderStudentRow(s, false, null, myDependents.length > 0);
+./student_grep.txt:106:3056:                        html += renderStudentRow(dep, true, s.id, false);
+./student_grep.txt:108:3063:                        html += renderStudentRow(titular, false, null, myDependents.length > 0);
+./student_grep.txt:109:3066:                            html += renderStudentRow(dep, true, titular.id, false);
+./student_grep.txt:110:3070:                        html += renderStudentRow(s, false, null, false);
+./student_grep.txt:111:3074:                    html += renderStudentRow(s, false, null, false);

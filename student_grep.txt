@@ -1,0 +1,146 @@
+110:            <a href="#" onclick="window.switchMainView('students')" id="nav-students" class="flex items-center px-4 py-3 bg-brand-red text-white rounded-lg shadow-md transition-all font-bold">
+156:            <div id="view-students" class="animate-fade-in">
+240:                                    <th class="px-3 py-3 border-b dark:border-gray-600 text-center w-10"><input type="checkbox" id="select-all-students" onclick="window.toggleSelectAllStudents(this)" class="rounded border-gray-300 text-brand-red focus:ring-brand-red"></th>
+250:                            <tbody id="students-table-body" class="text-sm text-gray-700 dark:text-gray-300 divide-y divide-gray-100 dark:divide-gray-700">
+392:                    <h4 class="font-bold text-base text-black leading-tight uppercase" id="qr-student-name">Nome</h4>
+475:                <input type="hidden" id="pay-student-id">
+479:                        <h4 class="font-bold text-xl text-gray-900 dark:text-white" id="pay-student-name">--</h4>
+573:                        <h4 class="font-bold text-xl text-gray-900 dark:text-white" id="prog-student-name">--</h4>
+578:                <input type="hidden" id="prog-student-id">
+704:    <!-- Edit Student Modal (FULL EDIT) -->
+837:                <button onclick="window.saveStudentChanges()" class="px-6 py-2 bg-brand-red text-white rounded font-bold hover:bg-red-700 transition shadow-md">Salvar Alterações</button>
+916:                        <input type="hidden" id="detail-student-id">
+1093:                            <div><label class="block text-xs font-bold text-blue-700 dark:text-blue-300 mb-1">Utilizador (Login)</label><input type="text" id="reg-student-login" class="w-full border border-blue-300 dark:border-blue-700 dark:bg-gray-800 dark:text-white rounded p-2 focus:outline-none focus:border-blue-600" placeholder="Ex: joao.silva"></div>
+1094:                            <div><label class="block text-xs font-bold text-blue-700 dark:text-blue-300 mb-1">Senha Padrão</label><input type="text" id="reg-student-pass" class="w-full border border-blue-300 dark:border-blue-700 dark:bg-gray-800 dark:text-white rounded p-2 focus:outline-none focus:border-blue-600" placeholder="Crie uma senha inicial"></div>
+1101:                <button onclick="window.saveAdminNewStudent()" class="px-6 py-2 bg-green-600 text-white rounded font-bold hover:bg-green-700 transition shadow-md flex items-center gap-2"><i class="fa-solid fa-user-check"></i> Finalizar Matrícula</button>
+1151:        window.students = []; 
+1153:        window.currentView = 'students'; 
+1520:            const studentId = document.getElementById('detail-student-id').value;
+1521:            const s = window.students.find(st => st.id === studentId);
+1807:        function isStudentAdmin(s) {
+1813:        function isStudentKid(s) {
+1838:            const comboStudents = window.students.filter(s => s.plan && window.getPlanType(s.plan).includes('combo') && s.enrollmentStatus !== 'Inativo' && !s.archived);
+1840:            comboStudents.sort((a, b) => (a.name || '').localeCompare(b.name || '')).forEach(s => optionsHtml += `<option value="${s.id}">${s.name}</option>`);
+1848:                const querySnapshot = await getDocs(collection(window.db, 'artifacts', APP_ID, 'public', 'data', 'students'));
+1849:                window.students = [];
+1853:                    window.students.push({ id: doc.id, ...data });
+1855:                window.students.sort((a, b) => new Date(b.registrationDate || 0) - new Date(a.registrationDate || 0));
+1857:                if(window.currentView === 'students') window.renderTable();
+1863:            const total = window.students.filter(s => !s.archived).length;
+1865:            window.students.forEach(s => {
+1867:                if (isStudentAdmin(s)) {
+1869:                    if (isStudentKid(s)) adminKidsCount++; else adminAdultsCount++;
+1871:                    if (isStudentKid(s)) kidsCount++; else adultsCount++;
+1880:        window.viewStudentDetails = (id) => {
+1882:                const s = window.students.find(st => st.id === id); if(!s) return;
+1902:                document.getElementById('detail-email').innerText = s.email || '-'; document.getElementById('detail-address').innerText = s.address || '-'; document.getElementById('detail-login').innerText = s.studentLogin || 'Não configurado'; document.getElementById('detail-pass').innerText = s.studentPassword || '---';
+1921:                document.getElementById('detail-qr-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${id}`; document.getElementById('detail-qr-id').value = id; document.getElementById('detail-student-id').value = id;
+1924:                    const titular = window.students.find(t => t.id === s.titularId); const tName = titular ? titular.name : 'Titular Desconhecido';
+1928:                    const deps = window.students.filter(d => d.titularId === s.id && window.getPlanType(d.plan) === 'dependente');
+1977:            document.getElementById('reg-plan').value = ''; document.getElementById('reg-belt-color').value = 'Branca'; document.getElementById('reg-belt-degree').value = '0'; document.getElementById('reg-student-login').value = ''; document.getElementById('reg-student-pass').value = '';
+1992:                const s = window.students.find(st => st.id === id); if(!s) return;
+2028:                    const t = window.students.find(st => st.name === s.titularName);
+2042:                document.getElementById('edit-login').value = s.studentLogin || ''; document.getElementById('edit-password').value = s.studentPassword || '';
+2129:        window.saveAdminNewStudent = async () => {
+2151:            const beltColor = document.getElementById('reg-belt-color').value; const beltDegree = document.getElementById('reg-belt-degree').value; const login = document.getElementById('reg-student-login').value; const pass = document.getElementById('reg-student-pass').value;
+2199:                const studentData = { name, dob, cpf, cep, email, phone, address, guardian, guardianCpf, plan: planDisplayString, planValue: planValue, titularName: titularName, titularId: titularId, paymentStatus: payStatus, enrollmentStatus: 'Ativo', belt: beltStr, category, howDidYouFindUs: origin, registrationDate: regDate.toISOString(), contractEndDate: endDate.toISOString(), nextDueDate: nextDueDate, studentLogin: login, studentPassword: pass, attendance: [], paymentHistory: initialPaymentHistory, progressLog: [{ type: 'info', text: 'Matrícula realizada.', date: regDate.toISOString() }] };
+2200:                if (photoBase64) studentData.photoBase64 = photoBase64;
+2201:                const titularDocRef = await addDoc(collection(window.db, 'artifacts', APP_ID, 'public', 'data', 'students'), studentData);
+2205:                    if(d1Name) await addDoc(collection(window.db, 'artifacts', APP_ID, 'public', 'data', 'students'), { name: d1Name, dob: toISODate(document.getElementById('admin-dep1-dob').value), titularName: name, titularId: titularDocRef.id, guardianKinship: document.getElementById('admin-dep1-kinship').value, belt: `Faixa Branca - 0º Grau`, plan: 'dependente', planValue: 0, category: 'Dependente (Combo)', howDidYouFindUs: origin, registrationDate: regDate.toISOString(), contractEndDate: endDate.toISOString(), paymentStatus: 'Isento', email, phone, attendance: [], paymentHistory: [], progressLog: [{ type: 'info', text: 'Matrícula realizada.', date: regDate.toISOString() }] });
+2209:                    if(d2Name) await addDoc(collection(window.db, 'artifacts', APP_ID, 'public', 'data', 'students'), { name: d2Name, dob: toISODate(document.getElementById('admin-dep2-dob').value), titularName: name, titularId: titularDocRef.id, guardianKinship: document.getElementById('admin-dep2-kinship').value, belt: `Faixa Branca - 0º Grau`, plan: 'dependente', planValue: 0, category: 'Dependente (Combo)', howDidYouFindUs: origin, registrationDate: regDate.toISOString(), contractEndDate: endDate.toISOString(), paymentStatus: 'Isento', email, phone, attendance: [], paymentHistory: [], progressLog: [{ type: 'info', text: 'Matrícula realizada.', date: regDate.toISOString() }] });
+2215:        window.saveStudentChanges = async () => {
+2227:            const s = window.students.find(st => st.id === id);
+2263:                const updateData = { name: name, dob: dobIso, cpf: cpf, cep: cep, address: address, guardian: guardian, guardianKinship: guardianKinship, guardianCpf: guardianCpf, plan: planDisplayString, planValue: planValue, titularName: titularName, titularId: titularId, category: newCategory, enrollmentStatus: status, belt: beltStr, studentLogin: login, studentPassword: pass, email: email, phone: phone };
+2271:                await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id), updateData);
+2278:            const s = window.students.find(st => st.id === id); if(!s) return;
+2279:            document.getElementById('prog-student-id').value = id; document.getElementById('prog-student-name').innerText = s.name; document.getElementById('prog-start-date').innerText = formatDate(s.registrationDate); 
+2309:            const id = document.getElementById('prog-student-id').value; const text = document.getElementById('prog-new-note').value.trim(); if(!text) { alert("Escreva uma anotação."); return; }
+2310:            try { await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id), { progressLog: arrayUnion({ type: 'note', text: text, date: new Date().toISOString() }) }); const s = window.students.find(st => st.id === id); if(s) { if(!s.progressLog) s.progressLog = []; s.progressLog.push({ type: 'note', text: text, date: new Date().toISOString() }); } window.openProgressModal(id); } catch(e) { alert("Erro ao salvar anotação."); }
+2313:        window.deleteProgressNote = async (studentId, logDate, logText) => {
+2315:            const s = window.students.find(st => st.id === studentId); if(!s) return;
+2320:                await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', studentId), { progressLog: arrayRemove(logToRemove) });
+2322:                window.openProgressModal(studentId);
+2327:            const id = document.getElementById('prog-student-id').value; const s = window.students.find(st => st.id === id); if(!s) return;
+2353:            const id = document.getElementById('prog-student-id').value; const dateVal = document.getElementById('prog-add-date').value; const classVal = document.getElementById('prog-add-class').value; if(!dateVal) return;
+2355:                const s = window.students.find(x => x.id === id); if (s && s.attendanceLog && s.attendanceLog.some(l => l.date === dateVal && l.time === classVal)) { alert("Já existe presença!"); return; }
+2357:                await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id), { attendance: arrayUnion(dateVal), attendanceLog: arrayUnion(newLog) }); 
+2363:        window.removeSpecificAttendance = async (studentId, dateStr, timeStr) => {
+2365:            const s = window.students.find(st => st.id === studentId); if(!s || !s.attendanceLog) return;
+2368:                await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', studentId), { attendanceLog: arrayRemove(logEntry) });
+2371:                if (!stillHasLogsForDate) { await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', studentId), { attendance: arrayRemove(dateStr) }); if(s.attendance) s.attendance = s.attendance.filter(d => d !== dateStr); }
+2442:                const studentId = decodedText; const student = window.students.find(s => s.id === studentId);
+2443:                if (!student) { 
+2452:                if (student.nextDueDate) {
+2453:                    const adjDate = getAdjustedNextDueDate(student);
+2464:                if (isBlocked || isPaymentLate(student)) { 
+2467:                    resDiv.innerHTML = `<i class="fa-solid fa-lock text-3xl text-red-500 mb-2"></i> Acesso Bloqueado!<br><span class="text-sm font-bold text-gray-800">${student.name}</span><br><span class="text-xs">Mensalidade Pendente.</span>`; resDiv.className = "text-center py-4 w-full rounded-lg bg-red-50 border border-red-300 font-medium text-red-700 min-h-[100px] flex flex-col items-center justify-center"; 
+2473:                if (student.attendanceLog && student.attendanceLog.some(l => l.date === todayISO && l.time === className)) { 
+2476:                    resDiv.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-3xl text-yellow-600 mb-2"></i> Check-in já realizado!<br><span class="text-sm font-bold text-gray-800">${student.name}</span><br><span class="text-xs text-yellow-800">Já tem presença registada na turma: ${className}</span>`; resDiv.className = "text-center py-4 w-full rounded-lg bg-yellow-50 border border-yellow-300 font-medium text-yellow-800 min-h-[100px] flex flex-col items-center justify-center shadow-inner"; 
+2482:                await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', studentId), { attendance: arrayUnion(todayISO), attendanceLog: arrayUnion(newLog) });
+2486:                resDiv.innerHTML = `<i class="fa-solid fa-check-circle text-4xl text-green-500 mb-2"></i> Check-in Confirmado!<br><span class="text-lg font-bold text-gray-800">${student.name}</span><br><span class="text-xs bg-green-200 text-green-800 px-2 py-1 rounded mt-1 inline-block">${className}</span>`;
+2489:                if(!student.attendance) student.attendance = []; if(!student.attendance.includes(todayISO)) student.attendance.push(todayISO);
+2490:                if(!student.attendanceLog) student.attendanceLog = []; student.attendanceLog.push(newLog);
+2491:                if (window.currentView === 'students') window.renderTable();
+2641:                            <button onclick="window.enrollExperimentalStudent('${exp.id}')" class="text-green-500 hover:text-green-700 mx-1" title="Matricular Aluno"><i class="fa-solid fa-user-plus"></i></button>
+2688:        window.enrollExperimentalStudent = (id) => {
+2692:            // Switch to students view
+2693:            window.switchMainView('students');
+2842:            const tbody = document.getElementById('students-table-body');
+2845:            let filtered = window.students;
+2850:                if (window.currentTab === 'kids') filtered = filtered.filter(s => isStudentKid(s) && !isStudentAdmin(s));
+2851:                else if (window.currentTab === 'adults') filtered = filtered.filter(s => !isStudentKid(s) && !isStudentAdmin(s));
+2852:                else if (window.currentTab === 'admin') filtered = filtered.filter(s => isStudentAdmin(s));
+2882:                    const aKid = isStudentKid(a);
+2883:                    const bKid = isStudentKid(b);
+2907:            const renderStudentRow = (s, isDependent = false, titularId = null, hasDependents = false) => {
+2931:                const isNewStudent = daysSinceRegistration <= 7;
+2936:                    if (isNewStudent) {
+2948:                if (isNewStudent) {
+2991:                    ${s.archived ? `<button onclick="window.deleteStudentPermanently('${s.id}')" class="text-red-700 hover:text-red-900 mx-1" title="Excluir Definitivamente"><i class="fa-solid fa-trash"></i></button>` : ''}
+2995:                if (isNewStudent) {
+3012:                            <input type="checkbox" class="student-checkbox rounded border-gray-300 text-brand-red focus:ring-brand-red" value="${s.id}" onchange="window.updateBulkActionsBtn()">
+3020:                                        <span class="font-bold text-sm text-gray-800 dark:text-gray-200 cursor-pointer hover:underline hover:text-brand-red transition-colors uppercase" onclick="window.viewStudentDetails('${s.id}')">${s.name}</span>
+3043:                    const group = isStudentKid(s) ? 'Infantil (até 11 anos)' : 'Jovem/Adulto (12+ anos)';
+3051:                    const myDependents = window.students.filter(d => window.getPlanType(d.plan) === 'dependente' && d.titularId === s.id);
+3052:                    html += renderStudentRow(s, false, null, myDependents.length > 0);
+3056:                        html += renderStudentRow(dep, true, s.id, false);
+3062:                        const myDependents = window.students.filter(d => window.getPlanType(d.plan) === 'dependente' && d.titularId === titular.id);
+3063:                        html += renderStudentRow(titular, false, null, myDependents.length > 0);
+3066:                            html += renderStudentRow(dep, true, titular.id, false);
+3070:                        html += renderStudentRow(s, false, null, false);
+3074:                    html += renderStudentRow(s, false, null, false);
+3080:            const selectAllCb = document.getElementById('select-all-students');
+3121:        window.toggleSelectAllStudents = (source) => {
+3122:            const checkboxes = document.querySelectorAll('.student-checkbox');
+3132:            const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+3171:            const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+3184:            const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+3198:                    const s = window.students.find(x => x.id === id);
+3201:                        await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id), { 
+3216:            const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+3226:                    const s = window.students.find(x => x.id === id);
+3228:                        await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id), { archived: true });
+3240:            const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+3250:                    const s = window.students.find(x => x.id === id);
+3252:                        await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id), { archived: false });
+3264:            const checkboxes = document.querySelectorAll('.student-checkbox:checked');
+3274:                    await deleteDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id));
+3290:            const s = window.students.find(st => st.id === id);
+3314:            const s = window.students.find(st => st.id === id); if(!s) return;
+3316:            document.getElementById('pay-student-id').value = id;
+3317:            document.getElementById('pay-student-name').innerText = s.name;
+3377:            const id = document.getElementById('pay-student-id').value;
+3388:            const s = window.students.find(st => st.id === id); if(!s) return;
+3424:                await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id), updateData);
+3436:            const s = window.students.find(st => st.id === id); if(!s) return;
+3439:            try { await updateDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id), { archived: !s.archived }); window.loadData(); } catch(e) { alert("Erro ao alterar status."); }
+3442:        window.deleteStudentPermanently = async (id) => {
+3443:            const s = window.students.find(st => st.id === id); if(!s) return;
+3446:                await deleteDoc(doc(window.db, 'artifacts', APP_ID, 'public', 'data', 'students', id)); 
+3458:            document.getElementById('view-students').classList.add('hidden'); 
+3473:            if(viewId === 'students') window.renderTable();
+3636:            const id = document.getElementById('prog-student-id').value;
+3637:            const s = window.students.find(st => st.id === id);
+3694:            const s = window.students.find(st => st.id === id);
+3718:            if(!list || !widget || window.students.length === 0) return;
+3723:            const bdays = window.students.filter(s => { if(!s.dob || s.archived || s.enrollmentStatus === 'Inativo') return false; const m = parseInt(s.dob.split('-')[1]); return m === currentMonth; });

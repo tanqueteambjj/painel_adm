@@ -1,0 +1,5 @@
+{
+  "name": "Tanque Team BJJ - Gestão & Frequência IA",
+  "description": "Sistema completo para gestão de academia com controle de frequência via reconhecimento facial (IA), QR Code e financeiro integrado.",
+  "requestFramePermissions": ["camera"]
+}

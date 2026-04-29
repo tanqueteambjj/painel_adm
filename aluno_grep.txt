@@ -1,0 +1,50 @@
+111:                <i class="fa-solid fa-users w-6"></i> <span class="ml-2">Alunos</span>
+140:                <input type="text" id="searchInput" onkeyup="window.filterTable()" placeholder="Buscar aluno..." class="w-full pl-10 pr-4 py-2 border dark:border-gray-600 rounded-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-red transition-colors">
+155:            <!-- VIEW: ALUNOS -->
+197:                                <span id="list-title">Lista de Alunos</span>
+202:                             <button onclick="window.openAdminRegisterModal()" class="bg-brand-red text-white text-xs font-bold px-3 py-1.5 rounded hover:bg-red-700 shadow-sm transition transform active:scale-95"><i class="fa-solid fa-plus mr-1"></i> NOVO ALUNO</button>
+210:                            <input type="text" id="searchInputMobile1" onkeyup="window.filterTable()" placeholder="Buscar aluno..." class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-red transition">
+241:                                    <th class="px-6 py-3 border-b dark:border-gray-600 font-semibold">Aluno</th>
+297:                            <p class="text-sm text-gray-500 dark:text-gray-400">Publique comunicados ou novidades para todos os alunos verem no painel.</p>
+349:    <!-- RELATÓRIO DE PROGRESSO DO ALUNO -->
+353:            <h2 class="text-lg font-bold mt-2 uppercase">Relatório de Evolução do Aluno</h2>
+542:                <p class="text-sm text-gray-600 dark:text-gray-400">Selecione a turma para registrar a presença dos alunos selecionados.</p>
+708:                <h3 class="font-display font-bold text-lg tracking-wider text-gray-800 dark:text-white">EDITAR ALUNO E GRADUAR</h3>
+736:                            <div><h4 class="text-sm font-bold text-brand-red uppercase">Dados Cadastrais</h4><p class="text-xs text-gray-400">Altere as informações básicas do aluno.</p></div>
+800:                        <div class="col-span-2"><h4 class="text-xs font-bold text-yellow-700 dark:text-yellow-500 uppercase"><i class="fa-solid fa-medal"></i> Graduação do Aluno</h4></div>
+821:                        <h4 class="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-key"></i> Acesso ao Portal do Aluno</h4>
+876:                <h2 class="text-2xl font-bold text-gray-800 dark:text-white leading-tight" id="detail-name">Nome do Aluno</h2>
+885:                            <p class="text-xs text-gray-400 dark:text-gray-500 uppercase font-bold">Status do Aluno</p>
+931:                        <h4 class="text-xs font-bold text-blue-700 dark:text-blue-500 uppercase mb-1">Acesso ao Portal do Aluno</h4>
+956:                        <h4 class="text-xs font-bold text-brand-red uppercase mb-3"><i class="fa-solid fa-id-card mr-1"></i> Dados do Aluno</h4>
+991:                                    <option value="" disabled selected>Selecione uma opção...</option><option value="Instagram">Instagram</option><option value="Facebook">Facebook</option><option value="Google">Pesquisa no Google</option><option value="Indicação de Aluno/Amigo">Indicação de um Aluno/Amigo</option><option value="Passou em frente">Passei em frente à Escola</option><option value="Outros">Outros</option>
+1091:                        <h4 class="text-xs font-bold text-blue-800 dark:text-blue-400 uppercase mb-3 flex items-center gap-2"><i class="fa-solid fa-key"></i> Definir Acesso ao Portal do Aluno</h4>
+1925:                    familyBox.innerHTML = `<h4 class="text-xs font-bold text-purple-700 dark:text-purple-400 uppercase mb-2"><i class="fa-solid fa-link"></i> Vínculo Familiar</h4><p class="text-sm text-purple-900 dark:text-purple-200 mb-2">Este aluno é dependente de <strong>${tName}</strong>.</p>`;
+2035:                if(s.photoBase64) { preview.src = s.photoBase64; preview.classList.remove('hidden'); } else { preview.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(s.name || 'Aluno')}&background=random`; preview.classList.remove('hidden'); }
+2211:                window.closeAdminRegisterModal(); window.loadData(); alert("Aluno cadastrado com sucesso!");
+2641:                            <button onclick="window.enrollExperimentalStudent('${exp.id}')" class="text-green-500 hover:text-green-700 mx-1" title="Matricular Aluno"><i class="fa-solid fa-user-plus"></i></button>
+2840:        // TABELA DE ALUNOS
+2902:            if (filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-gray-500">Nenhum aluno encontrado.</td></tr>'; return; }
+2949:                    subNameHtml += `<div class="text-[10px] text-brand-red font-bold mt-0.5 uppercase tracking-wider"><i class="fa-solid fa-star"></i> Aluno Novo</div>`;
+3219:            if (!confirm(`Deseja realmente arquivar os ${checkboxes.length} alunos selecionados?`)) return;
+3231:                alert("Alunos arquivados com sucesso!");
+3235:                alert("Erro ao arquivar alunos.");
+3243:            if (!confirm(`Deseja realmente desarquivar os ${checkboxes.length} alunos selecionados?`)) return;
+3255:                alert("Alunos desarquivados com sucesso!");
+3259:                alert("Erro ao desarquivar alunos.");
+3267:            if (!confirm(`ATENÇÃO: Deseja realmente APAGAR DEFINITIVAMENTE os ${checkboxes.length} alunos selecionados? Esta ação não pode ser desfeita.`)) return;
+3276:                alert("Alunos apagados com sucesso!");
+3280:                alert("Erro ao apagar alunos.");
+3292:                alert('Aluno não encontrado ou sem telefone cadastrado.');
+3438:            if(!confirm(`Deseja realmente ${action} o aluno ${s.name}?`)) return;
+3444:            if(!confirm(`ATENÇÃO: Deseja excluir DEFINITIVAMENTE o aluno ${s.name} do banco de dados? Esta ação não pode ser desfeita.`)) return;
+3448:                alert("Aluno excluído com sucesso.");
+3451:                alert("Erro ao excluir aluno."); 
+3524:                alert("O aluno não possui um e-mail cadastrado.");
+3528:                alert("O aluno não possui login e senha configurados.");
+3544:        <p>Para acompanhar sua evolução, histórico de aulas e pagamentos, preparamos um <strong>Portal do Aluno</strong> exclusivo para você.</p>
+3553:            <a href="https://www.tanqueteambjj.com.br/login.html" style="background-color: #D90429; color: #ffffff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 4px; display: inline-block;">Acessar Portal do Aluno</a>
+3557:        <p>Ao entrar no Portal do Aluno, você encontrará o seu <strong>QR Code de Acesso</strong>. Basta apresentá-lo na recepção ou no leitor da academia para registrar sua presença nas aulas.</p>
+3573:                subject: "Seu Acesso ao Portal do Aluno - Tanque Team BJJ"
+3698:            const text = `A família Tanque Team deseja um excelente aniversário para o nosso aluno ${name}! Que seu novo ciclo seja repleto de vitórias dentro e fora dos tatames. Oss! 🥋🎂`;
+3728:                document.getElementById('birthday-count').innerText = `${bdays.length} ${bdays.length === 1 ? 'aluno' : 'alunos'}`;
